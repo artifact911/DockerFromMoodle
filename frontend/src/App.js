@@ -15,8 +15,8 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload!!!! Hello from inside
-          docker Hi I'm development
+          Websockets fix Edit! <code>src/App.js</code> and save to reload!!!!
+          Hello from inside docker Hi I'm development
         </p>
         <a
           className="App-link"

@@ -20,6 +20,7 @@ services:
       - PORT=3001
       - HOST=http://realworld.com
       - MONGO_URL=mongodb://api_db:27017/api
+      - AUTH_API_URL=http://auth:3002/api
     depends_on:
       - api_db
 
@@ -28,8 +29,8 @@ services:
     container_name: realworld-docker-auth
     command: npm run start
     restart: unless-stopped
-    ports:
-      - "3002:3002"
+    # ports:
+    #   - "3002:3002"
     environment:
       - PORT=3002
       - HOST=http://realworld.com

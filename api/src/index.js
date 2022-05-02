@@ -1,27 +1,39 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { port, host, db } = require("./configuration");
+const axios = require("axios");
+const { port, host, db, authApiUrl } = require("./configuration");
 const { connectDb } = require("./helpers/db");
+
 const app = express();
-const postSchema = new mongoose.Schema({
+const kittySchema = new mongoose.Schema({
   name: String
 });
-const Post = mongoose.model("Post", postSchema);
+const Kitten = mongoose.model("Kitten", kittySchema);
 
 app.get("/test", (req, res) => {
   res.send("Our api server is working correctly");
+});
+
+app.get("/testwithcurrentuser", (req, res) => {
+  axios.get(authApiUrl + "/currentUser").then(response => {
+    res.json({
+      testwithcurrentuser: true,
+      currentUserFromAuth: response.data
+    });
+  });
 });
 
 const startServer = () => {
   app.listen(port, () => {
     console.log(`Started api service on port ${port}`);
     console.log(`Our host is ${host}`);
-    console.log(`Our db ${db}`);
+    console.log(`Database url ${db}`);
+    console.log(`Auth api url ${authApiUrl}`);
 
-    const silence = new Post({name: "Silence"});
-    silence.save(function(err, savedSilence) {
-      if(err) return console.log(err);
-      console.log("savedSilence with volumes!", savedSilence);
+    const silence = new Kitten({ name: "Silence" });
+    silence.save(function(err, result) {
+      if (err) return console.error(err);
+      console.log("result with volumes", result);
     });
   });
 };

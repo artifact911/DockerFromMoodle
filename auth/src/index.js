@@ -1,4 +1,5 @@
 const express = require("express");
+const res = require("express/lib/response");
 const { port, host, db } = require("./configuration");
 const { connectDb } = require("./helpers/db");
 const app = express();
@@ -13,6 +14,13 @@ const startServer = () => {
 
 app.get("/test", (req, res) => {
   res.send("Our auth server is working correctly");
+});
+
+app.get("/api/currentUser", (req, res) => {
+  res.json({
+    id: "1234",
+    email: "foo@gmail.com"
+  });
 });
 
 connectDb()

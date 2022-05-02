@@ -4,8 +4,8 @@ services:
   frontend:
     build: ./frontend
     container_name: realworld-docker-frontend
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
     restart: unless-stopped
     command: serve -s build -l 3000
 
@@ -34,6 +34,8 @@ services:
       - PORT=3002
       - HOST=http://realworld.com
       - MONGO_URL=mongodb://auth_db:27017/auth
+    depends_on:
+      - auth_db
 
   api_db:
     image: mongo:latest
@@ -46,6 +48,16 @@ services:
     container_name: realworld-docker-auth-db
     volumes:
       - mongodb_auth:/data/db
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: realworld-docker-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
+    depends_on:
+      - frontend
 
 volumes:
   mongodb_api:

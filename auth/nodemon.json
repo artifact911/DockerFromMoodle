@@ -1,6 +1,5 @@
 {
-    "verbose": false,
-    "watch": ["src"],
-    "exec": "node src/index.js"
-  }
-  
+  "verbose": false,
+  "watch": ["src"],
+  "exec": "node src/index.js"
+}
